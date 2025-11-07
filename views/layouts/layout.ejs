@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
+    <%- include('../partials/head') %>
+    <body>
 
-  <body>
-    <div id="wrapper">
-      <%- include('../partials/header') %>
-      <!-- prettier-ignore -->
-      <%- include('../partials/navigation')%>
-
-      <main>
-        <!-- prettier-ignore -->
-        <%- body %>
-      </main>
-
-      <%- include('../partials/footer') %>
-    </div>
-  </body>
+        <%- include('../partials/header') %>
+        
+        <main  class="main main_common  main_common--borderleft main_common--border_rigth ">
+            <%- body %>
+        </main>
+        <%- include('../partials/footer') %>
+    </body>
 </html>
