@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-    <%- include('../partials/head') %>
-    <body>
-
+<html lang = "en">
+<%- include('../partials/head') %>
+<body>
+    <div id="wrapper">
         <%- include('../partials/header') %>
-        
-        <main  class="main main_common  main_common--borderleft main_common--border_rigth ">
+        <%- include('../partials/navigation') %>
+        <main>
             <%- body %>
         </main>
         <%- include('../partials/footer') %>
-    </body>
+    </div>
+</body>
 </html>
