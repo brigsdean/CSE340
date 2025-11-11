@@ -1,55 +1,51 @@
-<h1>Welcome to CSE Motors</h1>
-<%- messages() %>
-<section class="hero">
-    <img src="/images/vehicles/delorean.jpg" alt="car">
-    <div class="hero-text">
-        <h3>DMC Delorean</h3>
-        <ul>
-            <li>3 Cup holders</li>
-            <li>Superman doors</li>
-            <li>Fuzzy dice!</li>
-        </ul>
-        <input type="button" class="button-blue" value="Own Today">
+<h1>Welcome to CSE Motors!</h1>
+<div id="banner">
+    <img src="/images/vehicles/delorean.jpg" alt="The Iconic Delorian">
+    <div id="banner_vehicle_info">
+        <h2 class="blueTxt">DMC Delorian</h2>
+        <p class="blueTxt">3 Cup holders<br>Superman doors<br>Fuzzy dice!</p>
+        <input type="submit" id="banner_submit" name="submit" value="Own Today">
     </div>
-</section>
-<div class="content">
-    <section id="reviews">
-        <h2>DMC Delorean Reviews</h2>
-        <ul class="open">
-            <li>"So fast it's almost like traveling in time." (4/5)</li>
+</div>
+<div id="vehicle_info">
+    
+    <div id="vehicle_reviews">
+        <h2>DMC Delorian Reviews</h2>
+        <ul>
+            <li>"So fast it's almost like travelling in time" (4/5)</li>
             <li>"Coolest ride on the road." (4/5)</li>
             <li>"I'm feeling McFly!" (5/5)</li>
             <li>"The most futuristic ride of our day." (4.5/5)</li>
-            <li>"80's livin and I love it." (5/5)</li>
+            <li>"80's livin and I love it!" (5/5)</li>
         </ul>
-    </section>
-    <section id="upgrades">
-        <h2>Delorean Upgrades</h2>
-        <div class="gallery">
-            <div class="caption-image">
-                <div>
-                    <img src="/images/upgrades/flux-cap.png" alt="Flux capacitor">
+    </div>
+    <div id="vehicle_upgrades">
+        <h2>Delorian Upgrades</h2>
+        <ul>
+            <li>
+                <div class="upgrade-content">
+                    <img src="/images/upgrades/flux-cap.png" alt="Flux Capacitor Icon">
                 </div>
-                <p><a href="#">Flux Capacitor</a></p>
-            </div>
-            <div class="caption-image">
-                <div>
-                    <img src="/images/upgrades/flame.jpg" alt="Flame decal">
+                <span><a href="#">Flux Capacitor</a></span>
+            </li>
+            <li>
+                <div class="upgrade-content">
+                    <img src="/images/upgrades/flame.jpg" alt="Flame Decals Icon">
                 </div>
-                <p><a href="#">Flame Decals</a></p>
-            </div>
-            <div class="caption-image">
-                <div>
-                    <img src="/images/upgrades/bumper_sticker.jpg" alt="Hello world bumper sticker">
+                <span><a href="#">Flame Decals</a></span>
+            </li>
+            <li>
+                <div class="upgrade-content">
+                    <img src="/images/upgrades/bumper_sticker.jpg" alt="Bumper Sticker Icon">
                 </div>
-                <p><a href="#">Bumper Stickers</a></p>
-            </div>
-            <div class="caption-image">
-                <div>
-                    <img src="/images/upgrades/hub-cap.jpg" alt="Hub cap">
+                <span><a href="#">Bumper Stickers</a></span>
+            </li>
+            <li>
+                <div class="upgrade-content">
+                    <img src="/images/upgrades/hub-cap.jpg" alt="Hub Cap Icon">
                 </div>
-                <p><a href="#">Hub Caps</a></p>
-            </div>
-        </div>
-    </section>
+                <span><a href="#">Hub Caps</a></span>
+            </li>
+        </ul>
+    </div>
 </div>
