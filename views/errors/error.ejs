@@ -1,14 +1,10 @@
+<!-- Check for a heading and display a heading and title if exists -->
 <% if (title) { %>
-
-   <h1 class="error-h1_title"><%= title %></h1>
-  
-    <div class="error-background-image">
-    
-    
-    <p class="error-message"><%- message %></p>
-
-  </div>  
- 
-<% } else {
-      res.redirect('/')
-    } %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
+<div id="errorcontainer">
+<!-- display an error message -->
+<%- message %>
+</div>
