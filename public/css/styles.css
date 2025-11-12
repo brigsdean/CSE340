@@ -1,3 +1,7 @@
+:root {
+  --sitemain: rgb(201, 17, 17);
+}
+
 /******* Change Box Model ***************/
 *,
 *:before,
@@ -5,115 +9,469 @@
   box-sizing: border-box;
 }
 
-:root {
-  --primary-color: #0fb3d4; 
-  --secondary-color: #333;
-  --third-color: #fff;
-  --font-family: 'Roboto', sans-serif;
+body {
+  font-family: sans-serif;
+  background-image: url('../images/site/checkerboard.jpg');
+
 }
 
-body {
-  margin: 0 auto;
-  font-family: var(--font-family);
-  max-width: 700px;
+.notice {
+  background-color: rgb(250, 182, 182);
+  border: 1px solid black;
+  padding: 10px;
+  list-style: none;
+}
+
+.success {
+  background-color: rgb(168, 250, 175);
+  border: 1px solid black;
+  padding: 10px;
+  list-style: none;
+}
+
+.blueTxt {
+  color: var(--sitemain);
+}
+
+main {
+  padding-left: 1rem;
+}
+
+h1 {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+h2, h3 {
+  font-weight: bold;
+}
+
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #fff; /* White border around the table */
+  margin-top: 1rem;
+}
+
+/* Style for alternating row colors */
+table tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Lighter shade */
+}
+
+table tr:nth-child(even) {
+  background-color: #e5e5e5; /* Darker shade */
+}
+
+/* Style for table header */
+table th {
+  background-color: #333; /* Darker color for the header */
+  color: #fff; /* Text color for the header */
   padding: 10px;
 }
 
-/*---------- HOMEPAGE ----------*/
-/*----- header -----*/
-header {
-  padding: 1rem;
-  text-align: center;
-  padding-bottom: 3rem;
+/* Style for table cells */
+table td {
+  border: 1px solid #fff; /* White border around each cell */
+  padding: 8px;
 }
+
+#wrapper {
+  border: 5px solid var(--sitemain);
+  border-radius: 1rem;
+  background-color: white;
+  padding: 0 10px;
+  margin: 3rem;
+}
+
 header a {
   text-decoration: none;
+  color: black;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;  
+  justify-content: space-evenly;
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(207,17,17,1) 15%, rgba(207,17,17,1) 85%, rgba(45,0,0,1) 100%);
+  padding: 1rem;
+  list-style-type: none;
+  clear: both;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+nav a {
+  display: inline-block;
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+nav ul li {
+  padding: 10px;
+  width: auto;
+  text-align: center;
+}
+
+nav ul li:hover {
+  background: white;
+  color: black;
+  transition: background-color 0.5s ease; /* Smooth transition on hover */
+}
+
+nav ul li:hover a {
+  color: inherit;
 }
 
 .siteName {
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  font-size: 1.8rem;
-}
-#tools {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-}
-/*----- navigation -----*/
-nav ul {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-  text-decoration: none;
-  color: var(--third-color);
-  background-color: var(--secondary-color);
-  list-style-type: none;
-  padding: 1rem; 
-}
-nav ul li a {
-  text-decoration: none;
-  color: var(--third-color)
+  display: block;
+  float: left;
+  padding: 1rem;
+  font-size: 2rem;
 }
 
-#hero {
+#tools {
+  display: flex;
+  float: right;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+#tools > div {
+  margin-left: 1.5rem;
+}
+
+#banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+#banner img {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  padding: 0 3rem;
+  justify-self: center;
+  max-width: 100%;
+}
+
+#banner_vehicle_info {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: rgba(255,255,255,0.5);
+  padding: 0 2rem;
+  width: auto;
+}
+
+
+#banner_submit {
+  background-color: var(--sitemain);
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+  
+#vehicle_upgrades ul {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#vehicle_upgrades li {
+  padding: 20px;
+  text-align: center;
+}
+
+#vehicle_upgrades img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+#vehicle_upgrades .upgrade-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sitemain);
+  min-height: 100px;
+}
+
+#invWrapper {
+  position: relative;
+  display: flex;
+  clear: both;
+  overflow: auto;
+}
+
+#invItem_Image {
+  display: block;
+  float: left;
+  padding: 2rem;
+}
+
+#invItem_Details {
+  display: block;
+  float: right;
+  max-width: 50%;
+}
+
+.price {
+  font-size: 64px;
+  color: var(--sitemain);
+  padding-right: 2rem;
+  margin: 0;
+}
+
+#invItem_Price p {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.polaroid {
+  position: relative;
+  display: inline-block;
+  margin: 2%; /* Use percentage for margin */
+  padding: 2%; /* Use percentage for padding */
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: rotate(-2deg);
+  width: 100%; /* Use percentage for width */
+}
+
+.polaroid::before,
+.polaroid::after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 5px; /* Use percentage for height */
+  background-color: #ccc;
+  bottom: -3px;
+}
+
+.polaroid::before {
+  left: 0;
+}
+
+.polaroid::after {
+  right: 0;
+}
+
+/* Style for the image inside the polaroid */
+.polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+footer {
+  border-top: 1px solid rgb(50, 50, 50);
+  margin-top: 1rem;
+}
+
+.copyright, footer a {
+  display: inline-block;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+}
+
+#inv-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px; /* Adjust the gap between items as needed */
+  max-width: 100%; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.inv-display {
+  /* list-style-type: none; */
+  padding: 0;
+  /* flex: 0 0 calc(30% - 10px); Adjust the width of each item as needed, considering margin */
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin: 5px; /* Add spacing between items */
+  box-sizing: border-box;
+  max-width: 550px;
+}
+
+.inv-display img {
+  max-width: 450px;
+}
+
+.inv-display a {
+  text-decoration: none;
+  color: black;
+}
+
+.inv-display a:hover {
+  color: var(--sitemain);
+}
+
+#errorcontainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  padding-bottom: 1rem;
 }
-.heroImage {
-  position: relative;
+
+.errormsg {
+  color: var(--sitemain);
+  font-size: 2rem;
+  margin: 0;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
-.heroImage img {
+
+.errortext {
+  font-size: 0.5rem;
+  margin: 0;
+}
+
+.errorbody {
+  margin: 1rem;
+  font-size: 2rem;
+}
+
+.errorimg {
+  max-width: 30%;
+  margin: 0 auto;
+}
+
+/* Begin Form styles */
+
+.form-container {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 80%;
+  min-width: 300px;
+}
+
+form legend {
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
   width: 100%;
-  height: auto;
-}
-.heroText {
-  position: absolute;
-  top: 0;
-  left: 0.5rem;
-  z-index: 1;
-  color: var(--primary-color);
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 0.5rem;
-  line-height: 0.5;
-}
-.ownTodayBtn img {
-  width: 50%;
-  height: auto;
+  padding: 8px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
 }
 
-
-#reviews ul li {
-  line-height: 2;
-}
-
-
-#upgrades {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
+textarea {
+  width: 100%;
+  min-width: 300px;
+  font-size: 1rem;
   
 }
-.upper-box {
+
+button, .button {
+  background-color: var(--sitemain);
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin: 10px 0;
+  border: 1px solid var(--sitemain)
+}
+
+button:hover {
+  background-color: white;
+  color: var(--sitemain);
+  border: 1px solid var(--sitemain);
+}
+
+.login-box, .center-container {
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  text-align: center;
-  max-width: 200px;
+  align-items: center;
+  justify-content: center;
 }
-.upgrade-box {
-  background-color: var(--primary-color);
-  text-align: center;
-  border: 1px solid var(--secondary-color);
-  padding: 0.5rem;
-  max-width: 200px;
+
+.password-info {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #222121;
 }
-.upper-box {
-  text-align: center;
+
+#pswdBtn {
+  font-size: 0.8rem;
+  padding: 4px;
+}
+
+#single-line {
+  display: block;
+  float: left;
+  clear: both;
+}
+
+input[type=text]:invalid, textarea:invalid {
+  background-color: rgb(248, 204, 204);
+}
+
+input[type=text]:valid, textarea:valid {
+  background-color: rgb(202, 250, 202);
+}
+
+input[type=text] {
+  font-size: 1rem;
+}
+
+select {
+  line-height: 1.5rem;
+  padding: 1rem;
+  border: 1px solid black;
+  background-color: white;
+  font-size: 1rem;
+}
+
+button:disabled, button:disabled:hover {
+  color: white;
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+/* Styles for Review section of inventory page */
+
+ol {
+  list-style: none;
+}
+
+.reviewBody {
+  border-top: 2px solid black;
+  margin-top: 5px;
+}
+
+.yellowNotice {
+  display: block;
+  background-color: rgb(252, 252, 147);
 }
