@@ -1,4 +1,4 @@
-const utilities = require('./index')
+const validate = require('../utilities/inventory-validation')
 const { body, validationResult } = require("express-validator") 
 const validate = {}
 const invModel = require('../models/inventory-model')
