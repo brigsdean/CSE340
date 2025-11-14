@@ -1,4 +1,4 @@
-const utilities = require(".")
+module.exports = require("./utilities")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
