@@ -1,4 +1,4 @@
-const invModel = require("../models/inventory-model")
+const utilities = require(".")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
