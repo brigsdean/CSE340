@@ -1,17 +1,32 @@
-module.exports = require("./utilities")
-const Util = {}
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
+const invModel = require("../models/inventory-model");
+const jwt = require("jsonwebtoken");
+
+require("dotenv").config();
+
+const Util = {};
+
+/**
+* @typedef {Object} Message
+* @property {number} message_id
+* @property {string} message_subject
+* @property {string} message_body
+* @property {Date} message_created
+* @property {number} message_to
+* @property {number} message_from
+* @property {boolean} message_read
+* @property {boolean} message_archived
+*/
+
 
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
+  let data = await invModel.getClassifications();
+  let list = "<ul>";
+  list += '<li><a href="/" title="Home page">Home</a></li>';
   data.rows.forEach((row) => {
-    list += "<li>"
+    list += "<li>";
     list +=
       '<a href="/inv/type/' +
       row.classification_id +
@@ -19,199 +34,277 @@ Util.getNav = async function (req, res, next) {
       row.classification_name +
       ' vehicles">' +
       row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
+      "</a>";
+    list += "</li>";
+  });
+  list += "</ul>";
+  return list;
+};
 
 /* **************************************
-* Build the classification view HTML
-* *************************************/
-Util.buildClassificationGrid = async function(data){
-  let grid = ""
-  if(data.length > 0){
-    grid += '<div id="inv-container">'
-    data.forEach(vehicle => { 
-      let link = '../../inv/detail/' + vehicle.inv_id
-      grid += '<div class="inv-display" id="inv' + vehicle.inv_id + '">'
-      grid += '<a href="'+link
-      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + 'details"><img src="' + vehicle.inv_thumbnail 
-      +'" alt="' + vehicle.inv_make + ' ' + vehicle.inv_model + ' /></a>'
-      grid += '<div class="namePrice">'
-      grid += '<hr />'
-      grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-      grid += '</h2>'
-      grid += '<span class="price">$' 
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-      grid += '</div>'
-      grid += '</div>'
-    })
-    grid += '</div>'
-  } else { 
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
-  }
-  return grid
-}
-
-/* **************************************
-* Build the inventory view HTML
-* ************************************ */
-Util.buildInventoryItem = async function(invitem){
-  let item = ""
-  if(invitem.length > 0){
-    let data = invitem[0]
-      item += '<div id="invWrapper">'
-      item += '<div id="invItem_Image">'
-      item +=  '<img src="' + data.inv_image 
-      +'" class="polaroid" alt= ' + data.inv_color + ' ' + data.inv_make + ' ' + data.inv_model +'/></div>'
-      
-      item += '<div id="invItem_Details">'
-      item += '<h2>'
-      item += data.inv_year + " - " + data.inv_make + ' ' + data.inv_model + ' - ' + data.inv_color 
-      item += '</h2>'
-      item += '<p>' + data.inv_description + '</p>'
-
-      item += '<p><b>Make          :</b> ' + data.inv_make + '</p>'
-      item += '<p><b>Model         :</b> ' + data.inv_model + '</p>'
-      item += '<p><b>Year          :</b> ' + data.inv_year + '</p>'
-      item += '<p><b>Milage        :</b> ' + data.inv_miles.toLocaleString() + '</p>'
-      item += '<p><b>Color         :</b> <span style="display: inline-block; border: 1px solid black; width: 16px; background-color: ' + data.inv_color + ';">&nbsp</span> ' + data.inv_color + '</p>'
-      item += '<p class="price">$' + new Intl.NumberFormat('en-US').format(data.inv_price) + '</p>'
-      item += '</div>'
-
-      item += '</div>'
-
-  } else { 
-    item += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
-  }
-  return item
-}
-
-/* **************************************
-* Build the categories dropdown
-* *************************************/
-Util.buildClassificationList = async function buildClassificationList(activeItem = null, disabled = false) {
-  let classList = await invModel.getClassifications()
-  if (disabled) {
-    disabled = ' disabled'
+ * Build the classification view HTML
+ * ************************************ */
+Util.buildClassificationGrid = async function (data) {
+  let grid;
+  if (data.length > 0) {
+    grid = '<ul id="inv-display">';
+    data.forEach((vehicle) => {
+      grid += "<li>";
+      grid +=
+        '<a href="../../inv/detail/' +
+        vehicle.inv_id +
+        '" title="View ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        'details"><img src="' +
+        vehicle.inv_thumbnail +
+        '" alt="Image of ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' on CSE Motors" /></a>';
+      grid += '<div class="namePrice">';
+      grid += "<hr />";
+      grid += "<h2>";
+      grid +=
+        '<a href="../../inv/detail/' +
+        vehicle.inv_id +
+        '" title="View ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' details">' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        "</a>";
+      grid += "</h2>";
+      grid +=
+        "<span>$" +
+        new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
+        "</span>";
+      grid += "</div>";
+      grid += "</li>";
+    });
+    grid += "</ul>";
   } else {
-    disabled = ''
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>';
   }
-  
-  dropDown = '<select id="classification_id" name="classification_id" required' + disabled + '>'
-  dropDown += '<option value="0" disabled>Select a classification...</option>'
-  classList.rows.forEach(category => {
-    if (parseInt(category.classification_id) === parseInt(activeItem)) {
-      dropDown += '<option value="' + category.classification_id + '" selected>' + category.classification_name + '</option>'
-    } else {  
-      console.log("didnt find it!")
-      dropDown += '<option value="' + category.classification_id + '">' + category.classification_name + '</option>'
+  return grid;
+};
+
+/**
+ * Build a single listing element from data
+ */
+Util.buildItemListing = async function (data) {
+  let listingHTML = "";
+  console.dir({ data });
+  if (data) {
+    listingHTML = `
+      <section class="car-listing">
+        <img src="${data.inv_image}" alt="${data.inv_make} ${data.inv_model}">
+        <div class="car-information">
+          <div>
+            <h2>${data.inv_year} ${data.inv_make} ${data.inv_model}</h2>
+          </div>
+          <div>
+            ${Number.parseFloat(data.inv_price).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </div>
+          <div class="description">
+            <p>
+              ${data.inv_description}
+            </p>
+            <dl>
+              <dt>MILEAGE</dt>
+              <dd>${data.inv_miles.toLocaleString("en-US", {
+                style: "decimal",
+              })}</dd>
+              <dt>COLOR</dt>
+              <dd>${data.inv_color}</dd>
+              <dt>CLASS</dt>
+              <dd>${data.classification_name}</dd>
+            </dl>
+          </div>
+
+        </div>
+      </section>
+    `;
+    // listingHTML += '<img src="/images/notexist.jpg">'; // Introduce 404 error
+  } else {
+    listingHTML = `
+      <p>Sorry, no matching vehicles could be found.</p>
+    `;
+  }
+  return listingHTML;
+};
+
+/**
+ * Build an HTML select element with classification data
+ * @param {int} classification_id
+ * @returns {string}
+ */
+
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications();
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>';
+  classificationList += "<option value=''>Choose a Classification</option>";
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"';
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected ";
     }
-  })
-  dropDown += '</select>'
-  return dropDown
-}
+    classificationList += ">" + row.classification_name + "</option>";
+  });
+  classificationList += "</select>";
+  return classificationList;
+};
 
 /* ****************************************
  * Middleware For Handling Errors
- * Wrap other function in this for 
+ * Wrap other function in this for
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
 
 /* ****************************************
-* Middleware to check token validity
-**************************************** */
+ * Middleware to check token validity
+ **************************************** */
 Util.checkJWTToken = (req, res, next) => {
-  try {
   if (req.cookies.jwt) {
-   jwt.verify(
-    req.cookies.jwt,
-    process.env.ACCESS_TOKEN_SECRET,
-    function (err, accountData) {
-     if (err) {
-      req.flash("Please log in")
-      res.clearCookie("jwt")
-      return res.redirect("/account/login")
-     }
-     res.locals.accountData = accountData
-     res.locals.loggedin = 1
-     next()
-    })
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        res.locals.accountData = accountData;
+        res.locals.loggedin = 1;
+        next();
+      }
+    );
   } else {
-   next()
+    next();
   }
-} catch (err){
-  console.error('Whoops a daisy!', err.message)
-}
- }
+};
+
+/**
+ * Function to update the browser cookie.
+ * @param {object} accountData
+ * @param {import("express").Response} res
+ */
+
+Util.updateCookie = (accountData, res) => {
+  const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: 3600,
+  });
+  if (process.env.NODE_ENV === "development") {
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+  } else {
+    res.cookie("jwt", accessToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600 * 1000,
+    });
+  }
+};
 
 /* ****************************************
  *  Check Login
  * ************************************ */
-Util.checkLogin = (req, res, next, options) => {
-  try {
-    console.log(`logged in as ${res.locals.accountData.account_type} - needs ${options}` )
-    if (res.locals.loggedin && options.includes(res.locals.accountData.account_type.toLowerCase())) { 
-      next()
-    } else {
-      req.flash("notice", "Secure Area: Please log in.")
-    return res.redirect("/account/login")
-    }
-  } catch {
-    req.flash("notice", "Secure Area: Please log in.")
-    return res.redirect("/account/login")  
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next();
+  } else {
+    req.flash("notice", "Please log in.");
+    return res.redirect("/account/login");
   }
- }
+};
 
 /* ****************************************
- *  Process Logout
+ *  Check authorization
  * ************************************ */
-Util.logout = (req, res, next, options) => {
-  try {
-
-  } catch (err) {
-    flash("error", err.message)
-    res.redirect("/account")
+Util.checkAuthorizationManager = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        if (
+          accountData.account_type == "Employee" ||
+          accountData.account_type == "Admin"
+        ) {
+          next();
+        } else {
+          req.flash("notice", "You are not authorized to modify inventory.");
+          return res.redirect("/account/login");
+        }
+      }
+    );
+  } else {
+    req.flash("notice", "You are not authorized to modify inventory.");
+    return res.redirect("/account/login");
   }
-}
+};
 
 
-/* **************************************
-* Build the categories dropdown
-* *************************************/
-Util.buildReviewsTable = async function (req, res, next, account_id) {
-  try {
-    const reviewList = await invModel.getReviewsByAccountID(account_id)
-    let htmlCode = `<table id="reviewTable"><thead><tr><th></th><th>Vehicle Reviewed</th><th>Date Reviewed</th><th></th><th></th></tr></thead><tbody>`
-    let review_num = 0
-    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone };
-    reviewList.rows.forEach(review => {
-      review_num ++
-      review.review_date = new Date(review.review_date).toLocaleDateString('en-US', options)
-      htmlCode += `<tr><td>${review_num}</td>`
-      htmlCode += `<td><a href="/inv/detail/${review.inv_id}">${review.inv_make} ${review.inv_model}</a></td>`
-      htmlCode += `<td>${review.review_date}</td>`
-      htmlCode += `<td><a href="/inv/edit-review/${review.review_id}" title="Edit Review">Edit</a></td>`
-      htmlCode += `<td><a href="/inv/delete-review/${review.review_id}" title="Delete Review">Delete</a></td>`
-  })
-  htmlCode += `</tbody></table>`
-  return htmlCode
-  } catch (err) {
-    console.error("Error retrieving reviews" + err)
-    flash("Error retrieving reviews...")
-    res.redirect("/account/login")
-  }
-  
-}
+/**
+ * Build an html table string from the message array
+ * @param {Array<Message>} messages 
+ * @returns 
+ */
+Util.buildInbox = (messages) => {
+  inboxList = `
+  <table>
+    <thead>
+      <tr>
+        <th>Received</th><th>Subject</th><th>From</th><th>Read</th>
+      </tr>
+    </thead>
+    <tbody>`;
 
+  messages.forEach((message) => {
+    inboxList += `
+    <tr>
+      <td>${message.message_created.toLocaleString()}</td>
+      <td><a href="/message/view/${message.message_id}">${message.message_subject}</a></td>
+      <td>${message.account_firstname} ${message.account_type}</td>
+      <td>${message.message_read ? "✓" : " "}</td>
+    </tr>`;
+  });
 
+  inboxList += `
+  </tbody>
+  </table> `;
+  return inboxList;
+};
 
-module.exports = Util
+Util.buildRecipientList = (recipientData, preselected = null) => {
+  let list = `<select name="message_to" required>`;
+  list += '<option value="">Select a recipient</option>';
+
+  recipientData.forEach((recipient) => {
+    list += `<option ${preselected == recipient.account_id ? "selected" : ""} value="${recipient.account_id}">${recipient.account_firstname} ${recipient.account_lastname}</option>`
+  });
+  list += "</select>"
+
+  return list;
+
+};
+module.exports = Util;
