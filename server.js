@@ -27,11 +27,13 @@ app.use(session({
     createTableIfMissing: true,
     pool,
   }),
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'temporary-dev-secret', // <-- add fallback here
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
-}))
+}));
+
+
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
