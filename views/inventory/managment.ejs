@@ -1,0 +1,26 @@
+<!-- Check for a heading and display a heading and title if exists -->
+<% if (title) { %>
+  <h1><%- title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
+
+<!-- Future functionality to display an error message -->
+<%- messages() %>
+
+<!-- Display main content -->
+<div class="center-container">
+<div class="form-container">
+<a href="/inv/add-classification">Add Classification</a>
+<br><a href="/inv/add-inventory">Add Inventory Item</a>
+
+<h2>Manage Inventory</h2>
+<p>Select a classification from the list below to see items belonging to that classification.</p>
+  <%- cats %>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
+<script src="../../js/inventory.js"></script>
+</div>
+</div>
