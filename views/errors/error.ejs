@@ -1,5 +1,10 @@
-<div class="error-display">
-    <h2><%- title %></h2>
-    <p><%- message %></p>
-    <img src="/images/site/error.svg" alt="error">
+<!-- Check for a heading and display a heading and title if exists -->
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
+<div id="errorcontainer">
+<!-- display an error message -->
+<%- message %>
 </div>
