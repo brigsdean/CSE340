@@ -1,27 +1,16 @@
-<!-- Check for a heading and display a heading and title if exists -->
+<h1><%- title %></h1>
+<%- messages() %> <%# WK4 TSK2.4 %>
 <% if (errors) { %>
-  <ul class="notice">
- <% errors.array().forEach(error => { %>
-   <li><%= error.msg %></li>
-<%  }) %>
- </ul>
-<% } %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
 
-<% if (title) { %>
-  <h1><%- title %></h1>
-  <% } else {
-    res.redirect('/')
-  } %>
+<form class="input-box" action="/inv/add-classification" method="post"> <%# The form must send all data... %>
+    <label>CLASSIFICATION NAME<input type="text" name="classification_name" required value="<%= locals.classification_name %>" pattern="[0-9a-zA-Z]+"></label>
+    <span class="fine-print">Required. Cannot contain spaces or special characters.</span>
+    <input type="submit" value="ADD">
 
-<!-- Future functionality to display an error message -->
-<%- messages() %>
-
-<div class="center-container">
-  <div class="form-container">
-    <form action="/inv/add-classification" method="post">
-      <label for="classification_name">Classification Name:</label>
-      <input type="text" id="classification_name" name="classification_name" pattern="^[^\s!@#$%^&*]+$" required>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-</div>'
+</form>
